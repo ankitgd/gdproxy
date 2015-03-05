@@ -2,6 +2,7 @@ package gdproxy
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -100,8 +101,11 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		var err error
 		ctx.Logf("Got request %v %v %v %v", r.URL.Path, r.Host, r.Method, r.URL.String())
 		if !r.URL.IsAbs() {
-			proxy.NonproxyHandler.ServeHTTP(w, r)
-			return
+			//proxy.NonproxyHandler.ServeHTTP(w, r)
+			//return
+			r.URL.Scheme = "http"
+			r.URL.Host = "0.0.0.0:2015"
+			fmt.Println("Override URL", r.URL.Scheme, r.URL.Opaque, r.URL.Host, r.URL.Path, r.URL.RawQuery)		
 		}
 		r, resp := proxy.filterRequest(r, ctx)
 
