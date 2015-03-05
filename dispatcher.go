@@ -2,7 +2,6 @@ package gdproxy
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -310,7 +309,7 @@ func HandleBytes(f func(b []byte, ctx *ProxyCtx) []byte) RespHandler {
 	return FuncRespHandler(func(resp *http.Response, ctx *ProxyCtx) *http.Response {
 		b, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			fmt.Errorf("Cannot read response %s", err)
+			ctx.Warnf("Cannot read response %s", err)
 			return resp
 		}
 		resp.Body.Close()
