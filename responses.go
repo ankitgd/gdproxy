@@ -1,4 +1,4 @@
-package goproxy
+package gdproxy
 
 import (
 	"bytes"
