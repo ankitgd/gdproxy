@@ -71,6 +71,13 @@ func UrlIs(urls ...string) ReqConditionFunc {
 	}
 }
 
+// MethodIs returns a ReqCondtion testing wether the Method in the request url is the given string
+func MethodIs(method string) ReqConditionFunc {
+	return func(req *http.Request, ctx *ProxyCtx) bool {
+		return req.Method == method
+	}
+}
+
 // ReqHostMatches returns a ReqCondition, testing whether the host to which the request was directed to matches
 // any of the given regular expressions.
 func ReqHostMatches(regexps ...*regexp.Regexp) ReqConditionFunc {
